@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package search;
+
+service SearchService {
+  rpc SearchQuestions (SearchRequest) returns (SearchResponse);
+}
+
+message SearchRequest {
+  string query = 1; // Search query (title)
+  int32 page = 2;   // Page number
+}
+
+message SearchResponse {
+  repeated Question questions = 1;
+  int32 totalPages = 2; // Total pages for pagination
+}
+
+message Question {
+  string title = 1; // Question title
+  string type = 2;  // Question type
+  string solution = 3; // For ANAGRAM type
+  repeated Block blocks = 4; // For ANAGRAM type
+  repeated Option options = 5; // For MCQ type
+}
+
+message Block {
+  string text = 1;
+  bool showInOption = 2;
+  bool isAnswer = 3;
+}
+
+message Option {
+  string text = 1;
+  bool isCorrectAnswer = 2;
+}
